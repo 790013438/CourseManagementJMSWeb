@@ -61,7 +61,7 @@ public class CourseQueueReceiver {
 
                     //publish message to topic
                     if (topicPublisher != null) {
-                        topicPublisher.publisherAddCourseMessage(course);
+                        topicPublisher.publishAddCourseMessage(course);
                     }
                 } catch (Exception e) {
                     System.out.println("41:)");
