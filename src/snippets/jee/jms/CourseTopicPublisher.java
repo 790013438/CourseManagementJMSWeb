@@ -1,5 +1,16 @@
 package snippets.jee.jms;
 
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicPublisher;
+import javax.jms.TopicSession;
+import javax.naming.InitialContext;
+
+import snippets.jee.jms.dto.CourseDTO;
+
 public class CourseTopicPublisher {
 
     private TopicConnection connection;
@@ -9,7 +20,7 @@ public class CourseTopicPublisher {
     public CourseTopicPublisher() throws Exception {
         InitialContext initCtx = new InitialContext();
         TopicConnectionFactory connectionFactory = (TopicConnectionFactory)initCtx.lookup("jms/CourseManagementCF");
-        connection connectionFactory.createTopicConnection();
+        connection = connectionFactory.createTopicConnection();
         connection.start();
         session = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
         topic = (Topic)initCtx.lookup("jms/courseManagementTopic");
