@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYP html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta content="text/html; charset=UTF-8"/>
@@ -18,7 +18,7 @@
             <jsp:setProperty property="credits" name="courseService" param="course_credits"/>
 
             <!-- Call addCourse method of the bean -->
-            ${courseService.addCourse()}
+            ${courseService.addCourse(pageContext.request)}
             <b>Course detailed are sent to a JMS Queue. It will be processed later</b>
         </c:if>
 
