@@ -20,6 +20,8 @@ public class CourseQueueReceiver {
     private QueueSession queueSession;
     private Queue queue;
 
+    private CourseTopicPublisher topicPublisher;
+
     private String receiverName;
 
     public CourseQueueReceiver (String name) throws Exception {
@@ -40,6 +42,9 @@ public class CourseQueueReceiver {
         //look up queue
         queue = (Queue)initContext.lookup("jms/courseManagementQueue");
 
+        //create topic publisher
+        topicPublisher = new CourseTopicPublisher();
+
         QueueReceiver queueReceiver = queueSession.createReceiver(queue);
         //register message listener
         queueReceiver.setMessageListener (new MessageListener() {
@@ -53,6 +58,11 @@ public class CourseQueueReceiver {
                     //process addCourse action. For example, save it in the database
 
                     System.out.println("Received addCourse message for Course name - " + course.getName() + " in Receiver " + receiverName);
+
+                    //publish message to topic
+                    if (topicPublisher != null) {
+                        topicPublisher.publisherAddCourseMessage(course);
+                    }
                 } catch (Exception e) {
                     System.out.println("41:)");
                 }
