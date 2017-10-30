@@ -14,6 +14,8 @@ public class JMSReceiverInitServlet extends HttpServlet {
 
     private CourseQueueReceiver courseQueueReceiver = null;
 
+    private CourseQueueReceiver courseQueueReceiver1 = null;
+
     public JMSReceiverInitServlet() {
         super();
     }
@@ -22,7 +24,11 @@ public class JMSReceiverInitServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         try {
+            //first instance of CourseQueueReceiver
             courseQueueReceiver = new CourseQueueReceiver("Receiver1");
+            //create another instance of CourseQueueReceiver with a different name
+            courseQueueReceiver1 = new CourseQueueReceiver("Receiver2");
+
         } catch (Exception e) {
             log("Error creating CourseQueueReceiver", e);
         }
@@ -32,8 +38,11 @@ public class JMSReceiverInitServlet extends HttpServlet {
     public void destroy() {
         if (courseQueueReceiver != null) {
             courseQueueReceiver.stop();
-            super.destroy();
         }
+        if (courseQueueReceiver1 != null) {
+            courseQueueReceiver1.stop();
+        }
+        super.destroy();
     }
 
 }
